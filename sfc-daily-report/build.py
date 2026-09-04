@@ -183,7 +183,7 @@ def build_trends(rows):
             f'padding:11px 0 11px 8px;border-bottom:1px solid {BORDER};vertical-align:top;'
             f'white-space:nowrap">{chg}</td></tr>')
     out.append("</table>")
-    return "".join(out)
+    return "\n".join(out)
 
 
 def build_ranked(rows):
@@ -204,7 +204,7 @@ def build_ranked(rows):
             f'border-bottom:1px solid {BORDER};white-space:nowrap;vertical-align:top">'
             f'{usd_exact(r["amount"])}</td></tr>')
     out.append("</table>")
-    return "".join(out)
+    return "\n".join(out)
 
 
 def build_signups(rows):
@@ -232,7 +232,7 @@ def build_signups(rows):
             f'border-bottom:1px solid {BORDER};vertical-align:top;white-space:nowrap">'
             f'{esc(r.get("time",""))}</td></tr>')
     out.append("</table>")
-    return "".join(out)
+    return "\n".join(out)
 
 
 def render(p):
@@ -304,7 +304,7 @@ def render(p):
         f'padding:18px 0 6px">Generated automatically from the SF Compute platform ledger, '
         f'the Givemeanode audit log and treasury P&amp;L.</div>'
         f'</td></tr></table></td></tr></table></div>')
-    return "".join(parts)
+    return "\n".join(parts)
 
 
 def selfcheck(html):
