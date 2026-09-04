@@ -1,0 +1,14 @@
+{
+  "_comment": "Display-name overrides for accounts whose pretty name is not in account_pii.business_name. Seeded from the 2026-09-03/04 sent reports. Add a line whenever a report shows a raw account id where a real name belongs.",
+  "sfcompute": "SF Compute",
+  "give_me_a_node": "Givemeanode",
+  "spl": "Social Physics Lab",
+  "tear_labs": "Tear Labs",
+  "mixlayer-labs-inc": "Mixlayer Labs",
+  "roboflow-1": "Roboflow",
+  "windborne-systems-1741329745": "WindBorne Systems",
+  "davidsj-com-david": "David Schneider-Joseph",
+  "gmail-com-brajeshrai": "Brajesh Rai",
+  "epsilon-labs": "Epsilon Labs",
+  "sonauto": "Sonauto"
+}
