@@ -107,6 +107,24 @@ Do not "tidy" this. Palette: spend `#2a78d6`, funding `#eb6834`, track
   per-customer spend being unavailable from the platform ledger.
 - Report external-only spend/funding totals in `notes[]`.
 
+## Scheduling
+
+Routine `trig_01J3Kp7vkEA7D9GG4qrH45ab`, cron `50 15 * * *` (UTC), fresh
+session per fire, push + email notifications on.
+
+**Timezone.** Cron is UTC and does not follow DST. `15:50 UTC` is 08:50 **PDT**.
+When the US falls back to PST (early November), change the cron to `50 16 * * *`
+or the report starts landing at 07:50 local. Changing it back in March.
+
+**Connectors — the thing most likely to break this.** A fired session only has
+`mcp__*` tools if the Routine itself carries the connector grants. The
+`connectors` parameter on `create_trigger` is disabled for this org, and grants
+do not pass through from the creating session, so a Routine minted from an
+agent session fires with **no Postgres, no Givemeanode and no Gmail** and cannot
+do any of the work. Fix it by attaching the three connectors to the Routine in
+the claude.ai Routines UI (Postgres MCP, Givemeanode, Gmail). Verify by firing
+the Routine once and checking that it reports all three tools present.
+
 ## Known gaps
 
 - `names.json` is a display-name map for accounts with no
