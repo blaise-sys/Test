@@ -215,19 +215,34 @@ def build_signups(rows):
            f'<th align="left" style="{TH}">Type &amp; product</th>'
            f'<th align="right" style="{TH}">Time (UTC)</th></tr>']
     for r in rows:
-        person = r.get("person") or "--"
+        # An org of one has no separate person name. Omit the name line entirely
+        # rather than printing a "--" placeholder: 12 of 20 rows are typically
+        # orgs of one, and a column of dashes reads as broken data. The original
+        # report showed the email alone for these.
+        email = r.get("email", "")
+        name_line = ""
+        if r.get("person"):
+            name_line = (f'<div style="font:500 12px/1.4 Arial;color:{INK}">'
+                         f'{esc(r["person"])}</div>')
+        email_line = ""
+        if email:
+            email_line = (f'<div style="font:400 11px/1.4 Arial;color:{SECOND};'
+                          f'word-break:break-word"><a href="mailto:{esc(email)}" '
+                          f'style="color:{SECOND};text-decoration:none">{esc(email)}</a></div>')
         out.append(
             f'<tr><td style="font:400 12px/1.4 Arial;color:{INK};padding:9px 8px 9px 0;'
-            f'border-bottom:1px solid {BORDER};vertical-align:top">{esc(person)}'
-            f'<div style="font:400 11px/1.4 Arial;color:{MUTED};margin-top:2px">'
-            f'{esc(r.get("email",""))}</div></td>'
+            f'border-bottom:1px solid {BORDER};vertical-align:top">'
+            f'{name_line}{email_line}</td>'
             f'<td style="font:400 12px/1.4 Arial;color:{SECOND};padding:9px 8px;'
             f'border-bottom:1px solid {BORDER};vertical-align:top">'
             f'{esc(r.get("company",""))}</td>'
             f'<td style="font:400 12px/1.4 Arial;color:{SECOND};padding:9px 8px;'
             f'border-bottom:1px solid {BORDER};vertical-align:top">{esc(r.get("type",""))}'
-            f'<div style="font:400 11px/1.4 Arial;color:{MUTED};margin-top:2px">'
-            f'{esc(r.get("product",""))}</div></td>'
+            f'<div style="margin-top:3px"><span style="display:inline-block;'
+            f'font:600 10px/1.5 Arial;border-radius:3px;padding:0 5px;white-space:nowrap;'
+            f'color:{GREEN if r.get("product") == "Givemeanode" else SPEND};'
+            f'border:1px solid {GREEN if r.get("product") == "Givemeanode" else SPEND}">'
+            f'{esc(r.get("product",""))}</span></div></td>'
             f'<td align="right" style="font:400 11px/1.4 Arial;color:{MUTED};padding:9px 0;'
             f'border-bottom:1px solid {BORDER};vertical-align:top;white-space:nowrap">'
             f'{esc(r.get("time",""))}</td></tr>')
